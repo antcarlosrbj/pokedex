@@ -15,7 +15,7 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login URL_BACK={URL_BACK} setToken={setToken} />} />
         <Route path="/signup" element={<SignUp URL_BACK={URL_BACK} />} />
-        <Route path="/" element={<Home/>} />
+        <Route path="/" element={<Home URL_BACK={URL_BACK} />} />
       </Routes>
     </BrowserRouter>
   );
