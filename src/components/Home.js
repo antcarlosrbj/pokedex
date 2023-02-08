@@ -1,25 +1,40 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import menu from './../assets/img/menu-outline.svg';
 
 export default function Home() {
 
+    const navigate = useNavigate();
     const[pokemons, setPokemons] = useState([]);
+    const [currentPage, setCurrentPage] = useState(0);
 
     useEffect(() => {
-        const promisse = axios.get("http://localhost:5000/all-pokemons")
+        if(currentPage !== 0) {
+            const promisse = axios.get(`http://localhost:5000/all-pokemons?page=${currentPage}`)
 
-        promisse.then(res => {
-            setPokemons(res.data);
-            console.log(res.data)
-        });
+            promisse.then(res => {
+                setPokemons((prevPokemons) => [...prevPokemons, ...res.data]);
+            });
 
-        promisse.catch(error => {
-            console.log(error);
-        });
+            promisse.catch(error => {
+                console.log(error);
+            });
+        }
+    }, [currentPage]);
+
+    useEffect(() => {
+        const intersectionObserver = new IntersectionObserver(entries => {
+        if (entries.some(entry => entry.isIntersecting)) {
+            setCurrentPage((currentValue) => currentValue + 1);
+        }
+        })
+        intersectionObserver.observe(document.querySelector('#loading-more'));
+        return () => intersectionObserver.disconnect();
     }, []);
+
 
     return (
         <HomeStyle>
@@ -31,12 +46,13 @@ export default function Home() {
             <Main>
                 {pokemons.map(pokemon => {
                     return (
-                        <Pokemon key={pokemon.id}>
+                        <Pokemon key={pokemon.id} onClick={() => navigate(`/pokemon/${pokemon.id}`)}>
                             <img src={pokemon.img} alt={pokemon.name} />
                             <p>{pokemon.name}</p>
                         </Pokemon>
                     )
                 })}
+                <p id='loading-more'>Carregando mais...</p>
             </Main>
         </HomeStyle>
     )
@@ -81,6 +97,13 @@ const Main = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     padding-top: 2vw;
+
+    p {
+        height: 5vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 `;
 
 const Pokemon = styled.div`
