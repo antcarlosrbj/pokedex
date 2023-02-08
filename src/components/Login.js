@@ -23,8 +23,6 @@ export default function Login({ URL_BACK, setToken }) {
     function loginForm(event) {
         event.preventDefault();
 
-        console.log(email + " " + password)
-
         const promisse = axios.post(URL_BACK + "/login", {
             email: email,
             password: password
