@@ -40,6 +40,24 @@ export default function Teams({ URL_BACK, user }) {
         });
     }
 
+    function deleteTeam(id) {
+        const token = localStorage.getItem("token");
+        
+        const promisse = axios.post(URL_BACK + "/delete-team", {
+            id
+        }, {
+            headers: { Authorization: `Bearer ${token}` }
+        })
+    
+        promisse.then(res => {
+            setReload(prev => !prev);
+        });
+    
+        promisse.catch(error => {
+            alert("Não foi possível excluir esse time")
+        });
+    }
+
     return (
         <TeamsStyle>
             <Header>
@@ -53,7 +71,7 @@ export default function Teams({ URL_BACK, user }) {
                     return(
                         <Team key={team.id}>
                             <p>{team.name}</p>
-                            <a><img src={trash} alt="trash"></img></a>
+                            <a onClick={() => deleteTeam(team.id)}><img src={trash} alt="trash"></img></a>
                         </Team>
                     )
                 })}
