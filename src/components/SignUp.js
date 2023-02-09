@@ -23,7 +23,7 @@ export default function SignUp({ URL_BACK }) {
             return;
         }
 
-        const promisse = axios.post(URL_BACK + "/sign-up", {
+        const promisse = axios.post(URL_BACK + "/signup", {
             name: name,
             email: email,
             password: password
@@ -34,14 +34,7 @@ export default function SignUp({ URL_BACK }) {
         });
 
         promisse.catch(error => {
-            if(error.response.status === 400) {
-                setErro(<p>A senha deve conter no mínimo 8 dígitos</p>);
-            } else if (error.response.status === 409) {
-                setErro(<p>Esse e-mail já foi cadastrado</p>);
-            } else {
-                alert("Infelizmente, não foi possível realizar o cadastro. Tente novamente mais tarde.");
-            }
-            console.log(error);
+            alert("Unfortunately, it was not possible to register. Try again later.");
         });
 
     }

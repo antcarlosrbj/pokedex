@@ -43,5 +43,4 @@ export default function Home({ URL_BACK, user, setUser }) {
             </Main>
         </HomeStyle>
     )
-
 }

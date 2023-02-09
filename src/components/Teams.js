@@ -32,10 +32,12 @@ export default function Teams({ URL_BACK, user }) {
     
         promisse.then(res => {
             setAddTeam(false);
+            setNameTeam("");
             setReload(prev => !prev);
         });
     
         promisse.catch(error => {
+            setNameTeam("");
             alert("Não foi possível adicionar um time")
         });
     }

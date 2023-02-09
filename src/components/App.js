@@ -5,6 +5,7 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import Home from "./Home";
 import Teams from "./Teams";
+import Pokemon from "./Pokemon";
 
 function App() {
   
@@ -19,6 +20,7 @@ function App() {
         <Route path="/signup" element={<SignUp URL_BACK={URL_BACK} />} />
         <Route path="/" element={<Home URL_BACK={URL_BACK} user={user} setUser={setUser} />} />
         <Route path="/teams" element={<Teams URL_BACK={URL_BACK} user={user} token={token} />} />
+        <Route path="/pokemon/:pokemonId" element={<Pokemon URL_BACK={URL_BACK} />} />
       </Routes>
     </BrowserRouter>
   );
